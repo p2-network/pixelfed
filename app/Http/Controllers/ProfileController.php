@@ -126,12 +126,18 @@ class ProfileController extends Controller
 	{
 		$user = Profile::whereNull('domain')->whereUsername($username)->first();
 
-		if ($user == null) {
-			abort(404);
-		}
 
 		if ($request->wantsJson() && config_cache('federation.activitypub.enabled')) {
+			if ($user == null) {
+				abort(response()->json(['message' => 'Not found'], 404));
+			}
+
 			return $this->showActivityPub($request, $user);
+		}
+
+
+		if ($user == null) {
+			abort(404);
 		}
 
 		return redirect($user->url());
