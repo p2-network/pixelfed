@@ -40,7 +40,11 @@ class ProfileController extends Controller
 		$user = Profile::whereNull('domain')
 			->whereNull('status')
 			->whereUsername($username)
-			->firstOrFail();
+			->first();
+
+		if (!$user) {
+			abort(404);
+		}
 
 		if($request->wantsJson() && config_cache('federation.activitypub.enabled')) {
 			return $this->showActivityPub($request, $user);
