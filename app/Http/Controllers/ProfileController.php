@@ -43,7 +43,7 @@ class ProfileController extends Controller
 			->first();
 
 		if (!$user) {
-			abort(404);
+			abort(404, 'User not found');
 		}
 
 		if($request->wantsJson() && config_cache('federation.activitypub.enabled')) {
