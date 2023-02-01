@@ -122,21 +122,20 @@ class ProfileController extends Controller
 		}
 	}
 
-	public function permalinkRedirect(Request $request, $username)
+	public function permalinkRedirect(Request $request, string $username)
 	{
 		$user = Profile::whereNull('domain')->whereUsername($username)->first();
 
 
 		if ($request->wantsJson() && config_cache('federation.activitypub.enabled')) {
-			if ($user == null) {
+			if (!$user) {
 				abort(response()->json(['message' => 'Not found'], 404));
 			}
 
 			return $this->showActivityPub($request, $user);
 		}
 
-
-		if ($user == null) {
+		if (!$user) {
 			abort(404);
 		}
 
