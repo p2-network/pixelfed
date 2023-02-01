@@ -124,7 +124,11 @@ class ProfileController extends Controller
 
 	public function permalinkRedirect(Request $request, $username)
 	{
-		$user = Profile::whereNull('domain')->whereUsername($username)->firstOrFail();
+		$user = Profile::whereNull('domain')->whereUsername($username)->first();
+
+		if ($user == null) {
+			abort(404);
+		}
 
 		if ($request->wantsJson() && config_cache('federation.activitypub.enabled')) {
 			return $this->showActivityPub($request, $user);
