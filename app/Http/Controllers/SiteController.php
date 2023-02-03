@@ -133,11 +133,7 @@ class SiteController extends Controller
 		} else {
 			$profile = Profile::whereUsername($username)
 				->whereNull('domain')
-				->first();
-
-			if (!$profile) {
-				abort(404);
-			}
+				->firstOrFail();
 
 			$url = "/$profile->username";
 		}
