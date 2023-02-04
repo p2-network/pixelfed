@@ -92,6 +92,7 @@ return [
             ],
             'root' => env('DO_SPACES_ROOT',''),
             'throw' => true,
+            'url' => env('AWS_URL'),
         ],
 
         'backup' => [
