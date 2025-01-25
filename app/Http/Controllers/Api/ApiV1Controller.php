@@ -807,7 +807,7 @@ class ApiV1Controller extends Controller
      * @param  int  $id
      * @return \App\Transformer\Api\RelationshipTransformer
      */
-    public function accountFollowById(Request $request, $id)
+    public function accountFollowById(Request $request, int $id)
     {
         abort_if(! $request->user() || ! $request->user()->token(), 403);
         abort_unless($request->user()->tokenCan('follow'), 403);
